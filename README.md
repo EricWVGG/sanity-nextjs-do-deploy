@@ -12,7 +12,7 @@ In your `sanity.config.ts`, add the new menu option to the Tool Menu of your Stu
 
 ```typescript
 import {defineConfig} from 'sanity'
-import {WrappedDeployTool} from 'sanity-next-digital-ocean-deploy'
+import {WrappedDeployTool} from 'sanity-nextjs-do-deploy'
 
 export default defineConfig({
   ...
@@ -55,7 +55,7 @@ If you already have a custom Tool Menu, you can use the unwrapped `DeployTool`.
 
 ```typescript
 import {defineConfig} from 'sanity'
-import {DeployTool} from 'sanity-next-digital-ocean-deploy'
+import {DeployTool} from 'sanity-nextjs-do-deploy'
 
 export default defineConfig({
   ...
@@ -81,8 +81,8 @@ Create a folder in `/src/app/api` called `deploy`, and a file there called `rout
 
 In `route.ts`, add the following lines:
 
-```
-import {initializeDeployment, checkDeployment} from 'sanity-next-digital-ocean-deploy'
+```typescript
+import { initializeDeployment, checkDeployment } from "sanity-nextjs-do-deploy"
 
 const digitalOceanToken = process.env.DIGITAL_OCEAN_TOKEN
 const digitalOceanAppId = process.env.DIGITAL_OCEAN_APP_ID
@@ -92,11 +92,10 @@ export const POST = initializeDeployment(digitalOceanToken, digitalOceanAppId)
 export const GET = checkDeployment(digitalOceanToken, digitalOceanAppId)
 ```
 
-### Nest steps
+### Next steps
 
-That’s it.
+A new button will appear in the top center of your Sanity Studio. Explain that to your users. Donezo.
 
 ## Notes
 
 This is probably compatible with the "pages router" but I haven't used it in a while. If there's any desire, I'll look into it.
-# sanity-nextjs-do-deploy
