@@ -6,7 +6,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/EricWVGG/sanity-nextjs-do-deploy"
+    "url": "git+https://github.com/EricWVGG/sanity-nextjs-do-deploy.git"
   },
   "keywords": [
     "Sanity",
