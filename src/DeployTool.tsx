@@ -1,3 +1,4 @@
+import React from "react"
 import { Button, useToast } from "@sanity/ui"
 import { VscRocket } from "react-icons/vsc"
 import { useEffect, type PropsWithChildren } from "react"

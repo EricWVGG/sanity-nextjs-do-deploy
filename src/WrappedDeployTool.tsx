@@ -1,3 +1,4 @@
+import React from "react"
 import type { DeployToolOptions } from "./types"
 import { DeployTool } from "./DeployTool"
 
