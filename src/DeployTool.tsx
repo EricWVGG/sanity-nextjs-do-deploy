@@ -2,7 +2,6 @@ import { Button, useToast } from "@sanity/ui"
 import { VscRocket } from "react-icons/vsc"
 import { useEffect, type PropsWithChildren } from "react"
 import type { DeployToolOptions } from "./types"
-import React from "react"
 
 export const DeployTool = ({ options }: { options?: DeployToolOptions }) => {
   const { successOrErrorDuration, checkProgressInterval, estimatedDeploymentDurationMessage, suppressToasts, apiEndpoint } = {
