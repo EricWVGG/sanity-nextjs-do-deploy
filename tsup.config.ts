@@ -1,10 +1,10 @@
-import { defineConfig } from "tsup";
+import { defineConfig } from "tsup"
 
 export default defineConfig({
-  entry: ["src/index.ts"],
+  entry: ["src/routes/index.ts", "src/sanity/index.ts"],
   format: ["cjs", "esm"], // Build for commonJS and ESmodules
   dts: true, // Generate declaration file (.d.ts)
-  splitting: false,
+  splitting: true,
   sourcemap: true,
   clean: true,
-});
+})
