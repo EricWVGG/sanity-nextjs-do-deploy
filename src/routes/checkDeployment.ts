@@ -10,9 +10,6 @@ export const checkDeployment = (token?: string, appId?: string) => async (reques
     "Content-Type": "application/json",
   }
 
-  const parameters = request.nextUrl.searchParams
-  const deploymentId = parameters.get("id")
-
   const findDeploymentId = async () => {
     const response = await fetch(`https://api.digitalocean.com/v2/apps/${appId}/deployments?page=1&per_page=1`, {
       method: "GET",
@@ -30,6 +27,9 @@ export const checkDeployment = (token?: string, appId?: string) => async (reques
     const data = await response.json()
     return NextResponse.json(data)
   }
+
+  const parameters = request.nextUrl.searchParams
+  const deploymentId = parameters.get("id")
 
   try {
     if (!deploymentId) {
