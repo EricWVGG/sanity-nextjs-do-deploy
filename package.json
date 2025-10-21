@@ -1,6 +1,6 @@
 {
   "package-name": "sanity-nextjs-do-deploy",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "Trigger DigitalOcean Deployments from your NextJS + Sanity Studio.",
   "author": "Eric_WVGG",
   "license": "MIT",
@@ -20,6 +20,11 @@
   "files": [
     "dist"
   ],
+  "exports": {
+    ".": null,
+    "./routes": "./dist/routes/index.cjs",
+    "./sanity": "./dist/sanity/index.cjs"
+  },
   "dependencies": {
     "@sanity/ui": "^3.1.10",
     "next": "^15.5.6",
