@@ -24,7 +24,7 @@ export default defineConfig({
 })
 ```
 
-You can customize the "toast" popup messaging, and change the NextJS api endpoint (more on that later), with the following options:
+You can customize the "toast" popup messaging — and change the NextJS api endpoint (more on that later) — with the following options:
 
 ```typescript
 const deployOptions = {
