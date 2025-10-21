@@ -24,7 +24,7 @@ export default defineConfig({
 })
 ```
 
-You can customize the "toast" popup messaging with the following options:
+You can customize the "toast" popup messaging, and change the NextJS api endpoint (more on that later), with the following options:
 
 ```typescript
 const deployOptions = {
@@ -39,13 +39,13 @@ const deployOptions = {
   // custom API endpoint
   apiEndpoint: '/api/deploy'
 }
-// note: these are the default values; all options are optional.
+// note: ^ these are the default values; all are optional.
 
 export default defineConfig({
   ...
   studio: {
     components: {
-      toolMenu: WrappedDeployTool(),
+      toolMenu: WrappedDeployTool(deployOptions),
     },
   },
 })
@@ -56,6 +56,10 @@ If you already have a custom Tool Menu, you can use the unwrapped `DeployTool`.
 ```typescript
 import {defineConfig} from 'sanity'
 import {DeployTool} from 'sanity-nextjs-do-deploy'
+
+const deployOptions = {
+  // ...
+}
 
 export default defineConfig({
   ...
@@ -77,7 +81,7 @@ export default defineConfig({
 
 You’ll need to set up an endpoint for deployments from Sanity Studio.
 
-Create a folder in `/src/app/api` called `deploy`, and a file there called `route.ts`. (You can use a different route if you like, just be sure to edit the `apiEndpoint` option in the component above.)
+Create a folder in `/src/app/api` called `deploy`, and a file there called `route.ts`.
 
 In `route.ts`, add the following lines:
 
@@ -91,6 +95,8 @@ export const POST = initializeDeployment(digitalOceanToken, digitalOceanAppId)
 
 export const GET = checkDeployment(digitalOceanToken, digitalOceanAppId)
 ```
+
+You can use a different route if you like, just be sure to edit the `apiEndpoint` option in the `sanity.config.js` deployOptions as per above.
 
 ### Next steps
 
