@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 
 export const checkDeployment =
   (token?: string, appId?: string) =>
-  async (request: NextRequest, context: { params: Promise<{}> }): Promise<Response> => {
+  async (request: NextRequest, context: { params: Promise<{}> }): Promise<void | Response> => {
     if (!token || !appId) {
       throw new Error("missing required token and appId")
     }
