@@ -4,4 +4,5 @@ export type DeployToolOptions = {
   estimatedDeploymentDurationMessage?: string
   suppressToasts?: boolean
   apiEndpoint?: string
+  requireConfirmation?: string | boolean
 }

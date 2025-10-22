@@ -5,16 +5,18 @@ import { useEffect, type PropsWithChildren } from "react"
 import type { DeployToolOptions } from "./types"
 
 export const DeployTool = ({ options }: { options?: DeployToolOptions }) => {
-  const { successOrErrorDuration, checkProgressInterval, estimatedDeploymentDurationMessage, suppressToasts, apiEndpoint } = {
+  const { successOrErrorDuration, checkProgressInterval, estimatedDeploymentDurationMessage, suppressToasts, apiEndpoint, requireConfirmation } = {
     successOrErrorDuration: 600000, // 1m
     checkProgressInterval: 30000, // 30s
     estimatedDeploymentDurationMessage: "Est. 8 minutes",
     suppressToasts: false,
     apiEndpoint: "/api/deploy",
+    requireConfirmation: undefined,
     ...options,
   }
 
   const PAUSE_BEFORE_INTERVAL = 5000 // 5s
+  const DEFAULT_CONFIRMATION_MESSAGE = "This will redeploy the website with _all_ published content. Proceed?"
 
   const toast = useToast()
 
@@ -23,6 +25,12 @@ export const DeployTool = ({ options }: { options?: DeployToolOptions }) => {
   let deploymentId: string | undefined = undefined
 
   const deploy = async () => {
+    if (!!requireConfirmation) {
+      const message = typeof requireConfirmation === "string" ? requireConfirmation : DEFAULT_CONFIRMATION_MESSAGE
+      if (!confirm(message)) {
+        return
+      }
+    }
     !suppressToasts &&
       toast.push({
         title: <Label>Deployment: initializing</Label>,

@@ -1,6 +1,6 @@
 {
   "package-name": "sanity-nextjs-do-deploy",
-  "version": "2.0.14",
+  "version": "2.0.15",
   "description": "Trigger DigitalOcean Deployments from your NextJS + Sanity Studio.",
   "author": "Eric_WVGG",
   "license": "MIT",

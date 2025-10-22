@@ -24,22 +24,32 @@ export default defineConfig({
 })
 ```
 
-You can customize the "toast" popup messaging — and change the NextJS api endpoint (more on that later) — with the following options:
+Options and customization:
+
+- customize the "toast" popup messaging
+- change the NextJS api endpoint
+- require confirmation from the user
 
 ```typescript
 const deployOptions = {
-  // how long will a "Success" or "Error" toast stay visible?
+  // How long will a "Success" or "Error" toast stay visible?
   successOrErrorDuration: 60000, // 1 minute
-  // how often will the script check the deployment progress?
+  // How often will the script check the deployment progress?
   checkProgressInterval: 30000, // 30 seconds
-  // deployment progress message
+  // Deployment progress message.
   estimatedDeploymentDurationMessage: "Est. 7 minutes",
-  // suppress “toast” messages altogether
+  // Suppress “toast” messages altogether.
   suppressToasts: false,
-  // custom API endpoint
-  apiEndpoint: '/api/deploy'
+  // Custom API endpoint.
+  apiEndpoint: '/api/deploy',
+  // Require confirmation from user.
+  // Omit or leave undefined (default) to proceed on click with no confirmation.
+  // Enter "true" for a simple confirmation message.
+  // default: "This will redeploy the website with _all_ published content. Proceed?"
+  requireConfirmation: true,
+  // Enter a string for a custom message.
+  requireConfirmation: "Ready to go?",
 }
-// note: ^ these are the default values; all are optional.
 
 export default defineConfig({
   ...
@@ -57,9 +67,7 @@ If you already have a custom Tool Menu, you can use the unwrapped `DeployTool`.
 import {defineConfig} from 'sanity'
 import {DeployTool} from 'sanity-nextjs-do-deploy'
 
-const deployOptions = {
-  // ...
-}
+const deployOptions = { /* see list above */ }
 
 export default defineConfig({
   ...
