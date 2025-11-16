@@ -1,7 +1,8 @@
 import { Button, useToast } from "@sanity/ui"
 import { VscRocket } from "react-icons/vsc"
-import { useEffect, type PropsWithChildren } from "react"
+import { useEffect } from "react"
 import type { DeployToolOptions } from "./types"
+import { toasts } from "./toasts"
 
 export const DeployTool = ({ options }: { options?: DeployToolOptions }) => {
   const { successOrErrorDuration, checkProgressInterval, estimatedDeploymentDurationMessage, suppressToasts, apiEndpoint, requireConfirmation } = {
@@ -30,22 +31,16 @@ export const DeployTool = ({ options }: { options?: DeployToolOptions }) => {
         return
       }
     }
-    !suppressToasts &&
-      toast.push({
-        title: <Label>Deployment: initializing</Label>,
-        duration: PAUSE_BEFORE_INTERVAL + 500,
-      })
+    if (!suppressToasts) {
+      const bundle = toasts("INIT", PAUSE_BEFORE_INTERVAL + 500)
+      toast.push(bundle)
+    }
 
     const { status } = await fetch("/api/deploy", { method: "POST" })
 
-    if (status !== 200) {
-      !suppressToasts &&
-        toast.push({
-          title: <Label>Deployment: failed initialization</Label>,
-          status: "error",
-          duration: successOrErrorDuration,
-          closable: true,
-        })
+    if (status !== 200 && !suppressToasts) {
+      const bundle = toasts("INIT_FAIL", successOrErrorDuration)
+      toast.push(bundle)
     }
 
     // give DO a chance to start; if we check too fast, the check might return previous deployment
@@ -65,14 +60,16 @@ export const DeployTool = ({ options }: { options?: DeployToolOptions }) => {
       if (deploymentId) {
         const response = await fetch(`${apiEndpoint}?id=${deploymentId}`, { method: "GET" })
         const data = await response.json()
-        !suppressToasts &&
-          toast.push({
-            title: <Label>Deployment: {data.deployment.phase.replace("_", " ").toLowerCase()}</Label>,
-            status: data.deployment.phase === "ACTIVE" ? "success" : data.deployment.phase === "CANCELED" ? "error" : "info",
-            description: data.deployment.phase === "BUILDING" ? estimatedDeploymentDurationMessage : undefined,
-            duration: ["ACTIVE", "CANCELED"].includes(data.deployment.phase) ? successOrErrorDuration : checkProgressInterval,
-            closable: ["ACTIVE", "CANCELED"].includes(data.deployment.phase) ? true : undefined,
-          })
+        if (data.id === "invalid_argument" || data.id === "Unauthorized") {
+          clearInterval(interval)
+          const bundle = toasts(data.id, successOrErrorDuration)
+          toast.push(bundle)
+          return
+        }
+        if (!suppressToasts) {
+          const bundle = toasts(data.deployment.phase, ["ACTIVE", "CANCELED"].includes(data.deployment.phase) ? successOrErrorDuration : checkProgressInterval, estimatedDeploymentDurationMessage)
+          toast.push(bundle)
+        }
         if (["ACTIVE", "CANCELED"].includes(data.deployment.phase)) {
           clearInterval(interval)
         }
@@ -91,10 +88,3 @@ export const DeployTool = ({ options }: { options?: DeployToolOptions }) => {
 
   return <Button fontSize={1} iconRight={VscRocket} text="Deploy" mode="bleed" tone="default" style={{ cursor: "pointer" }} onClick={() => deploy()} />
 }
-
-const Label = ({ children }: PropsWithChildren) => (
-  <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-    <VscRocket />
-    <div>{children}</div>
-  </div>
-)
