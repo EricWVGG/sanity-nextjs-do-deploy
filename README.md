@@ -126,3 +126,5 @@ This is probably compatible with the "pages router" but I haven't used it in a w
 
 If I restart this dev, use plugin-kit
 https://www.sanity.io/docs/studio/developing-plugins#k2ad0148ea85e
+
+todo: WrappedDeployTool.tsx needs to be responsive

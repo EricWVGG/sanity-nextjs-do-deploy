@@ -1,6 +1,6 @@
-import { Button, useToast } from "@sanity/ui"
-import { VscRocket } from "react-icons/vsc"
 import { useEffect } from "react"
+import { VscRocket } from "react-icons/vsc"
+import { Button, useToast } from "@sanity/ui"
 import type { DeployToolOptions } from "./types"
 import { toasts } from "./toasts"
 
@@ -8,7 +8,7 @@ export const DeployTool = ({ options }: { options?: DeployToolOptions }) => {
   const { successOrErrorDuration, checkProgressInterval, estimatedDeploymentDurationMessage, suppressToasts, apiEndpoint, requireConfirmation } = {
     successOrErrorDuration: 600000, // 1m
     checkProgressInterval: 30000, // 30s
-    estimatedDeploymentDurationMessage: "Est. 8 minutes",
+    estimatedDeploymentDurationMessage: "Est. 7 minutes",
     suppressToasts: false,
     apiEndpoint: "/api/deploy",
     requireConfirmation: undefined,
@@ -88,5 +88,5 @@ export const DeployTool = ({ options }: { options?: DeployToolOptions }) => {
     }
   }, [])
 
-  return <Button fontSize={1} iconRight={VscRocket} text="Deploy" mode="bleed" tone="default" style={{ cursor: "pointer" }} onClick={() => deploy()} />
+  return <Button type="button" fontSize={1} iconRight={VscRocket} text="Deploy" mode="bleed" tone="default" style={{ cursor: "pointer" }} onClick={() => deploy()} />
 }
