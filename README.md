@@ -104,7 +104,7 @@ export default defineConfig({
   ...
   studio: {
     components: {
-      toolMenu: () => (
+      toolMenu: (props: any) => (
         <div style={{ display: "flex", flexDirection: "row" }}>
           {props.renderDefault(props)}
           /* stuff you've already inserted */

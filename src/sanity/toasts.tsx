@@ -13,6 +13,7 @@ export const toasts = (phase: string, duration: number, estimatedDeploymentDurat
       return {
         title: <Label>Deployment: failed initialization</Label>,
         status: "error",
+        description: "Something went wrong. Please check the configuration and your server logs.",
         duration,
         closable: true,
       }

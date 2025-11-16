@@ -36,18 +36,20 @@ export const DeployTool = ({ options }: { options?: DeployToolOptions }) => {
       toast.push(bundle)
     }
 
-    const { status } = await fetch("/api/deploy", { method: "POST" })
+    const { status, ...props } = await fetch("/api/deploy", { method: "POST" })
 
     if (status !== 200 && !suppressToasts) {
       const bundle = toasts("INIT_FAIL", successOrErrorDuration)
       toast.push(bundle)
+      console.error(status)
+      console.error(props)
+    } else {
+      // give DO a chance to start; if we check too fast, the check might return previous deployment
+      timeoutId = window.setTimeout(() => {
+        check()
+        interval = window.setInterval(check, checkProgressInterval)
+      }, PAUSE_BEFORE_INTERVAL)
     }
-
-    // give DO a chance to start; if we check too fast, the check might return previous deployment
-    timeoutId = window.setTimeout(() => {
-      check()
-      interval = window.setInterval(check, checkProgressInterval)
-    }, PAUSE_BEFORE_INTERVAL)
   }
 
   const check = async () => {
