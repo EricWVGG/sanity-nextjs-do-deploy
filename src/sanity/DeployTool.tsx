@@ -1,4 +1,3 @@
-import React from "react"
 import { Button, useToast } from "@sanity/ui"
 import { VscRocket } from "react-icons/vsc"
 import { useEffect, type PropsWithChildren } from "react"
@@ -16,7 +15,7 @@ export const DeployTool = ({ options }: { options?: DeployToolOptions }) => {
   }
 
   const PAUSE_BEFORE_INTERVAL = 5000 // 5s
-  const DEFAULT_CONFIRMATION_MESSAGE = "This will redeploy the website with _all_ published content. Proceed?"
+  const DEFAULT_CONFIRMATION_MESSAGE = "This will redeploy the website with ALL published content. Proceed?"
 
   const toast = useToast()
 
