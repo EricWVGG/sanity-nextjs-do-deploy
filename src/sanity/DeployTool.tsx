@@ -88,5 +88,5 @@ export const DeployTool = ({ options }: { options?: DeployToolOptions }) => {
     }
   }, [])
 
-  return <Button type="button" fontSize={1} iconRight={VscRocket} text="Deploy" mode="bleed" tone="default" style={{ cursor: "pointer" }} onClick={() => deploy()} />
+  return <Button type="button" fontSize={1} iconRight={VscRocket} text="Deploy" mode="ghost" tone="default" style={{ cursor: "pointer" }} onClick={() => deploy()} />
 }
