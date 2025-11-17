@@ -69,10 +69,10 @@ export const DeployTool = ({ options }: { options?: DeployToolOptions }) => {
           return
         }
         if (!suppressToasts) {
-          const bundle = toasts(data.deployment.phase, ["ACTIVE", "CANCELED"].includes(data.deployment.phase) ? successOrErrorDuration : checkProgressInterval, estimatedDeploymentDurationMessage)
+          const bundle = toasts(data.deployment.phase, ["ACTIVE", "CANCELED", "SUPERCEDED"].includes(data.deployment.phase) ? successOrErrorDuration : checkProgressInterval, estimatedDeploymentDurationMessage)
           toast.push(bundle)
         }
-        if (["ACTIVE", "CANCELED"].includes(data.deployment.phase)) {
+        if (["ACTIVE", "CANCELED", "SUPERCEDED"].includes(data.deployment.phase)) {
           clearInterval(interval)
         }
       }

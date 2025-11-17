@@ -38,6 +38,13 @@ export const toasts = (phase: string, duration: number, estimatedDeploymentDurat
         duration,
         closable: true,
       }
+    case "SUPERCEDED":
+      return {
+        title: <Label>Deployment: superceded</Label>,
+        status: "error",
+        duration,
+        closable: true,
+      }
     case "Unauthorized":
       return {
         title: <Label>Deployment: Error</Label>,
