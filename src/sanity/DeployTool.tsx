@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { VscRocket } from "react-icons/vsc"
 import { Button, useToast } from "@sanity/ui"
 import type { DeployToolOptions } from "./types"
@@ -20,8 +20,8 @@ export const DeployTool = ({ options }: { options?: DeployToolOptions }) => {
 
   const toast = useToast()
 
-  let interval: number
-  let timeoutId: number
+  const [interval, setInterval] = useState<number>()
+  const [timeoutId, setTimeoutId] = useState<number>()
   let deploymentId: string | undefined = undefined
 
   const deploy = async () => {
@@ -45,10 +45,13 @@ export const DeployTool = ({ options }: { options?: DeployToolOptions }) => {
       console.error(props)
     } else {
       // give DO a chance to start; if we check too fast, the check might return previous deployment
-      timeoutId = window.setTimeout(() => {
+      const newTimeoutId = window.setTimeout(() => {
         check()
-        interval = window.setInterval(check, checkProgressInterval)
+        clearInterval(interval)
+        const newIntervalId = window.setInterval(check, checkProgressInterval)
+        setInterval(newIntervalId)
       }, PAUSE_BEFORE_INTERVAL)
+      setTimeoutId(newTimeoutId)
     }
   }
 
