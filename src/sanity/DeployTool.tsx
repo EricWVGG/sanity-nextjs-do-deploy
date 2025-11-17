@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 import { VscRocket } from "react-icons/vsc"
 import { Button, useToast } from "@sanity/ui"
 import type { DeployToolOptions } from "./types"
@@ -24,13 +24,15 @@ export const DeployTool = ({ options }: { options?: DeployToolOptions }) => {
   const [timeoutId, setTimeoutId] = useState<number>()
   let deploymentId: string | undefined = undefined
 
-  const deploy = async () => {
+  const deploy = useCallback(async () => {
     if (!!requireConfirmation) {
       const message = typeof requireConfirmation === "string" ? requireConfirmation : DEFAULT_CONFIRMATION_MESSAGE
       if (!confirm(message)) {
         return
       }
     }
+    clearInterval(interval)
+
     if (!suppressToasts) {
       const bundle = toasts("INIT", PAUSE_BEFORE_INTERVAL + 500)
       toast.push(bundle)
@@ -45,17 +47,16 @@ export const DeployTool = ({ options }: { options?: DeployToolOptions }) => {
       console.error(props)
     } else {
       // give DO a chance to start; if we check too fast, the check might return previous deployment
-      const newTimeoutId = window.setTimeout(() => {
-        check()
-        clearInterval(interval)
+      const newTimeoutId = window.setTimeout(async () => {
+        await check()
         const newIntervalId = window.setInterval(check, checkProgressInterval)
         setInterval(newIntervalId)
       }, PAUSE_BEFORE_INTERVAL)
       setTimeoutId(newTimeoutId)
     }
-  }
+  }, [])
 
-  const check = async () => {
+  const check = useCallback(async () => {
     try {
       if (!deploymentId) {
         const response = await fetch(apiEndpoint, { method: "GET" })
@@ -82,7 +83,7 @@ export const DeployTool = ({ options }: { options?: DeployToolOptions }) => {
     } catch (error) {
       console.error(error)
     }
-  }
+  }, [])
 
   useEffect(() => {
     return () => {
