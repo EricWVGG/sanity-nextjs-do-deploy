@@ -22,7 +22,7 @@ export const DeployTool = ({ options }: { options?: DeployToolOptions }) => {
 
   const [interval, setInterval] = useState<number>()
   const [timeoutId, setTimeoutId] = useState<number>()
-  let deploymentId: string | undefined = undefined
+  const [deploymentId, setDeploymentId] = useState<string>()
 
   const deploy = useCallback(async () => {
     if (!!requireConfirmation) {
@@ -32,6 +32,7 @@ export const DeployTool = ({ options }: { options?: DeployToolOptions }) => {
       }
     }
     clearInterval(interval)
+    setDeploymentId(undefined)
 
     if (!suppressToasts) {
       const bundle = toasts("INIT", PAUSE_BEFORE_INTERVAL + 500)
@@ -61,7 +62,7 @@ export const DeployTool = ({ options }: { options?: DeployToolOptions }) => {
       if (!deploymentId) {
         const response = await fetch(apiEndpoint, { method: "GET" })
         const data = await response.json()
-        deploymentId = data.deployments[0].id
+        setDeploymentId(data.deployments[0].id)
       }
       if (deploymentId) {
         const response = await fetch(`${apiEndpoint}?id=${deploymentId}`, { method: "GET" })
