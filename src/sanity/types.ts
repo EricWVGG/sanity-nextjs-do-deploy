@@ -5,4 +5,5 @@ export type DeployToolOptions = {
   suppressToasts?: boolean
   apiEndpoint?: string
   requireConfirmation?: string | boolean
+  debug?: boolean
 }

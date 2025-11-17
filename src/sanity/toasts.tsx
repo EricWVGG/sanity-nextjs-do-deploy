@@ -24,6 +24,7 @@ export const toasts = (phase: string, duration: number, estimatedDeploymentDurat
         duration,
         closable: true,
       }
+    case "PENDING_BUILD":
     case "BUILDING":
       return {
         title: <Label>Deployment: building</Label>,
