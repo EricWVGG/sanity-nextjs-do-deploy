@@ -31,6 +31,7 @@ export const toasts = (phase: string, duration: number, estimatedDeploymentDurat
         status: "info",
         description: estimatedDeploymentDurationMessage,
         duration,
+        closable: true,
       }
     case "CANCELED":
       return {

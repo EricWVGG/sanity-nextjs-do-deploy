@@ -128,3 +128,15 @@ If I restart this dev, use plugin-kit
 https://www.sanity.io/docs/studio/developing-plugins#k2ad0148ea85e
 
 todo: WrappedDeployTool.tsx needs to be responsive
+
+Todo: expand to other platforms
+
+- Render deployments https://render.com/docs/webhooks
+- Railway
+- AWS
+- Cloudflare
+- Linode
+- fly.io
+- Engine Yard
+- Heroku
+- Cloud 66

@@ -26,7 +26,7 @@ export const DeployTool = ({ options }: { options?: DeployToolOptions }) => {
 
   const consoleDebug = (messages: string | Array<any>) => {
     if (!debug) return
-    consoleDebug(messages)
+    console.log(messages)
   }
 
   const deploy = async () => {
@@ -89,6 +89,7 @@ export const DeployTool = ({ options }: { options?: DeployToolOptions }) => {
       setDeploymentId(undefined)
     }
     if (!suppressToasts) {
+      consoleDebug(data.deployment.phase)
       const duration = ["ACTIVE", "CANCELED", "SUPERCEDED"].includes(data.deployment.phase) ? successOrErrorDuration : checkProgressInterval
       const bundle = toasts(data.deployment.phase, duration, estimatedDeploymentDurationMessage)
       toast.push(bundle)
