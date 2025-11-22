@@ -17,6 +17,13 @@ export const toasts = (phase: string, duration: number, estimatedDeploymentDurat
         duration,
         closable: true,
       }
+    case "DEPLOYING":
+      return {
+        title: <Label>Deployment: finalizing deployment</Label>,
+        status: "success",
+        duration,
+        closable: true,
+      }
     case "ACTIVE":
       return {
         title: <Label>Deployment: active</Label>,
@@ -65,7 +72,7 @@ export const toasts = (phase: string, duration: number, estimatedDeploymentDurat
       }
     default:
       return {
-        title: <Label>Deployment: Unknown Error</Label>,
+        title: <Label>Deployment: {phase}</Label>,
         status: "error",
         description: "Something went wrong. Please check the configuration.",
         duration,
