@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 import { VscRocket } from "react-icons/vsc"
 import { Button, useToast } from "@sanity/ui"
 import type { DeployToolOptions } from "./types"
@@ -29,7 +29,7 @@ export const DeployTool = ({ options }: { options?: DeployToolOptions }) => {
     console.log(messages)
   }
 
-  const deploy = async () => {
+  const deploy = useCallback(async () => {
     if (!!requireConfirmation) {
       const message = typeof requireConfirmation === "string" ? requireConfirmation : DEFAULT_CONFIRMATION_MESSAGE
       if (!confirm(message)) {
@@ -60,18 +60,18 @@ export const DeployTool = ({ options }: { options?: DeployToolOptions }) => {
       }, PAUSE_BEFORE_INTERVAL)
       setTimeoutId(newTimeoutId)
     }
-  }
+  }, [])
 
   // This is just perpetually running.
-  useInterval(() => void check(), checkProgressInterval)
+  useInterval(() => void check(deploymentId), checkProgressInterval)
 
-  const getDeploymentId = async () => {
+  const getDeploymentId = useCallback(async () => {
     const response = await fetch(apiEndpoint, { method: "GET" })
     const data = await response.json()
     setDeploymentId(data.deployments[0].id)
-  }
+  }, [])
 
-  const check = async () => {
+  const check = useCallback(async (deploymentId?: string) => {
     if (!deploymentId) {
       return
     }
@@ -94,7 +94,7 @@ export const DeployTool = ({ options }: { options?: DeployToolOptions }) => {
       const bundle = toasts(data.deployment.phase, duration, estimatedDeploymentDurationMessage)
       toast.push(bundle)
     }
-  }
+  }, [])
 
   useEffect(() => {
     return () => clearTimeout(timeoutId)
