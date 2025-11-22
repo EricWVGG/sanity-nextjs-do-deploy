@@ -1,15 +1,14 @@
-import type { DeployToolOptions } from "./types"
-import { DeployTool } from "./DeployTool"
-import styled from "styled-components"
+import type {DeployToolOptions} from './types'
+import {DeployTool} from './DeployTool'
+import styled from 'styled-components'
 
-export const WrappedDeployTool = (options?: DeployToolOptions) => (props: any) =>
-  (
-    <ToolWrapper>
-      {props.renderDefault(props)}
-      <Rule />
-      <DeployTool options={options} />
-    </ToolWrapper>
-  )
+export const WrappedDeployTool = (options: DeployToolOptions) => (props: any) => (
+  <ToolWrapper>
+    {props.renderDefault(props)}
+    <Rule />
+    <DeployTool options={options} />
+  </ToolWrapper>
+)
 
 const ToolWrapper = styled.div`
   display: flex;

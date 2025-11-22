@@ -1,50 +1,80 @@
 {
-  "package-name": "sanity-nextjs-do-deploy",
-  "version": "2.1.9",
-  "description": "Trigger DigitalOcean Deployments from your NextJS + Sanity Studio.",
-  "author": "Eric_WVGG",
-  "license": "MIT",
+  "name": "sanity-plugin-nextjs-do-deploy",
+  "version": "0.1.0",
+  "description": "Launch deployments from Sanity and NextJS",
+  "keywords": [
+    "sanity",
+    "sanity-plugin"
+  ],
+  "homepage": "https://github.com/EricWVGG/sanity-nextjs-do-deploy#readme",
+  "bugs": {
+    "url": "https://github.com/EricWVGG/sanity-nextjs-do-deploy/issues"
+  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/EricWVGG/sanity-nextjs-do-deploy.git"
+    "url": "git+ssh://git@github.com/EricWVGG/sanity-nextjs-do-deploy.git"
   },
-  "keywords": [
-    "Sanity",
-    "Digital Ocean",
-    "deployments"
-  ],
-  "type": "module",
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.cjs",
+  "license": "MIT",
+  "author": "Eric Jacobsen <sanity@wvgg.co>",
+  "scripts": {
+    "build": "plugin-kit verify-package --silent && pkg-utils build --strict --check --clean",
+    "format": "prettier --write --cache --ignore-unknown .",
+    "link-watch": "plugin-kit link-watch",
+    "lint": "eslint .",
+    "prepublishOnly": "npm run build",
+    "watch": "pkg-utils watch --strict"
+  },
+  "sideEffects": false,
+  "type": "commonjs",
+  "exports": {
+    ".": {
+      "source": "./src/index.ts",
+      "import": "./dist/index.mjs",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "sanity.json",
+    "src",
+    "v2-incompatible.js"
   ],
-  "exports": {
-    ".": null,
-    "./routes": "./dist/routes/index.cjs",
-    "./sanity": "./dist/sanity/index.cjs"
-  },
   "dependencies": {
+    "@sanity/incompatible-plugin": "^1.0.5",
     "@sanity/ui": "^3.1.10",
-    "next": "^15.0.0",
-    "react": "^19.2.0",
     "react-icons": "^5.5.0",
     "usehooks-ts": "^3.1.1"
   },
   "devDependencies": {
-    "@types/react": "^19.2.2",
-    "tsup": "^8.5.0",
-    "typescript": "^5.8.0",
-    "vitest": "^3.2.4"
+    "@sanity/pkg-utils": "8.1.12",
+    "@sanity/plugin-kit": "^4.0.20",
+    "@types/react": "^19.2.6",
+    "@typescript-eslint/eslint-plugin": "^8.47.0",
+    "@typescript-eslint/parser": "^8.47.0",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-config-sanity": "^7.1.4",
+    "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "prettier": "^3.6.2",
+    "prettier-plugin-packagejson": "^2.5.19",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "sanity": "^4.18.0",
+    "styled-components": "^6.1.19",
+    "typescript": "^5.9.3",
+    "yalc": "1.0.0-pre.53"
   },
-  "name": "sanity-nextjs-do-deploy",
-  "scripts": {
-    "test": "npx vitest",
-    "build": "tsup"
+  "peerDependencies": {
+    "next": "^15.0.0",
+    "react": "^19.2.0",
+    "sanity": "^4.14.2"
   },
-  "bugs": {
-    "url": "https://github.com/EricWVGG/sanity-nextjs-do-deploy/issues"
-  },
-  "homepage": "https://github.com/EricWVGG/sanity-nextjs-do-deploy#readme"
+  "engines": {
+    "node": ">=20"
+  }
 }
