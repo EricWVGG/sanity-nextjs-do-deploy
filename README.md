@@ -140,3 +140,4 @@ Todo: expand to other platforms
 - Engine Yard
 - Heroku
 - Cloud 66
+# sanity-plugin-nextjs-do-deploy
